@@ -19,9 +19,6 @@ import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Data;
-
-@Data
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -81,4 +78,116 @@ public class Customer {
     @JoinColumn(name = "id_customer_image", referencedColumnName = "id_customer_image")
 	@JsonIgnore
 	private CustomerImage customerImage;
+	
+	public Customer() {
+		
+	}
+
+	public Customer(Integer id_customer,
+			@NotNull(message = "name is required") @Pattern(regexp = "[a-zA-Z0-9 ]*", message = "name can only cointain letters") String name,
+			@NotNull(message = "surname is required") @Pattern(regexp = "[a-zA-Z0-9 ]*", message = "surname can only cointain letters") String surname,
+			@NotNull(message = "rfc is required") @Pattern(regexp = "^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\\d]{3}))?$", message = "rfc has an invalid format") String rfc,
+			@NotNull(message = "mail is required") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "mail has an invalid format") String mail,
+			@NotNull(message = "address is required") String address,
+			@Min(value = 0, message = "status must be 0 or 1") @Max(value = 1, message = "status must be 0 or 1") Integer status,
+			Region region, String image, @Valid CustomerImage customerImage) {
+		super();
+		this.id_customer = id_customer;
+		this.name = name;
+		this.surname = surname;
+		this.rfc = rfc;
+		this.mail = mail;
+		this.address = address;
+		this.status = status;
+		this.region = region;
+		this.image = image;
+		this.customerImage = customerImage;
+	}
+
+	public Integer getId_customer() {
+		return id_customer;
+	}
+
+	public void setId_customer(Integer id_customer) {
+		this.id_customer = id_customer;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getRfc() {
+		return rfc;
+	}
+
+	public void setRfc(String rfc) {
+		this.rfc = rfc;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public CustomerImage getCustomerImage() {
+		return customerImage;
+	}
+
+	public void setCustomerImage(CustomerImage customerImage) {
+		this.customerImage = customerImage;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id_customer=" + id_customer + ", name=" + name + ", surname=" + surname + ", rfc=" + rfc
+				+ ", mail=" + mail + ", address=" + address + ", status=" + status + ", region=" + region + ", image="
+				+ image + ", customerImage=" + customerImage + "]";
+	}
 }
