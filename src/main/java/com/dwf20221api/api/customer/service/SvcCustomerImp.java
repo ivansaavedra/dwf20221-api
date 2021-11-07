@@ -10,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.dwf20221api.api.customer.dto.ApiResponse;
+import com.dwf20221api.api.customer.dto.DtoCustomerList;
 import com.dwf20221api.api.customer.entity.Customer;
 import com.dwf20221api.api.customer.entity.CustomerImage;
 import com.dwf20221api.api.customer.repository.RepoCustomer;
+import com.dwf20221api.api.customer.repository.RepoCustomerList;
 import com.dwf20221api.exceptionHandling.ApiException;
 
 @Service
@@ -20,19 +22,17 @@ public class SvcCustomerImp implements SvcCustomer {
 
 	@Autowired
 	RepoCustomer repoCustomer;
+	
+	@Autowired
+	RepoCustomerList repoCustomerList;
 
 	@Autowired
 	SvcRegion svcRegion;
 
 	@Override
-	public List<Customer> getCustomers() {
+	public List<DtoCustomerList> getCustomers() {
 		try {
-			List<Customer> customers = repoCustomer.findByStatus(1);
-			if (customers != null) {
-				for (Customer customer : customers) {
-					customer.setImage(customer.getCustomerImage().getImage());
-				}
-			}
+			List<DtoCustomerList> customers = repoCustomerList.findByStatus();
 			return customers;
 		} catch (Exception e) {
 			throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());

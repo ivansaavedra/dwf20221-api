@@ -66,7 +66,8 @@ public class SvcRegionImp implements SvcRegion {
 		try {
 			Region r = repoRegion.getRegionByName(region.getRegion());
 			if(r != null) {
-				throw new ApiException(HttpStatus.BAD_REQUEST, "region alredy exists");
+				repoRegion.updateExistingRegion(region.getRegion());
+				return new ApiResponse("region updated");
 			}
 			region.setId_region(id_region);
 			region.setStatus(1);

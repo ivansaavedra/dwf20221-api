@@ -15,9 +15,6 @@ import com.dwf20221api.api.customer.entity.Customer;
 @Repository
 public interface RepoCustomer extends JpaRepository<Customer, Integer>{
 
-	@Query(value ="SELECT * FROM customer WHERE status = :status", nativeQuery = true)
-	List<Customer> findByStatus(@Param("status") Integer status);
-	
 	@Modifying
 	@Transactional
 	@Query(value ="UPDATE customer_image I "

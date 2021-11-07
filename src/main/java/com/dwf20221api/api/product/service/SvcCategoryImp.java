@@ -62,7 +62,8 @@ public class SvcCategoryImp implements SvcCategory {
 		try {
 			Category r = repoCategory.getCategoryByName(category.getCategory());
 			if(r != null) {
-				throw new ApiException(HttpStatus.BAD_REQUEST, "category alredy exists");
+				repoCategory.updateExistingCategory(category.getCategory());
+				return new ApiResponse("category updated");
 			}
 			category.setId_category(id_category);
 			category.setStatus(1);

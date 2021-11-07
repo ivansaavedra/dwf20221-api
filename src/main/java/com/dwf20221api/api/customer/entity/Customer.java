@@ -32,13 +32,13 @@ public class Customer {
 	@JsonProperty("name")
 	@Column(name = "name")
 	@NotNull(message="name is required")
-	@Pattern(regexp="[a-zA-Z0-9\s]*", message="name can only cointain letters")
+	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]*", message="name can only cointain letters")
 	private String name;
 	
 	@JsonProperty("surname")
 	@Column(name = "surname")
 	@NotNull(message="surname is required")
-	@Pattern(regexp="[a-zA-Z0-9\s]*", message="surname can only cointain letters")
+	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]*", message="surname can only cointain letters")
 	private String surname;
 	
 	@JsonProperty("rfc")
@@ -64,10 +64,14 @@ public class Customer {
 	@Max(value=1, message="status must be 0 or 1")
 	private Integer status;
 	
-	@JsonProperty("region")
-	@OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_region", referencedColumnName = "id_region")
-	private Region region;
+//	@JsonProperty("region")
+//	@OneToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "id_region", referencedColumnName = "id_region")
+//	private Region region;
+	
+	@JsonProperty("id_region")
+	@Column(name = "id_region")
+	private Integer id_region;
 	
 	@JsonProperty("image")
 	@Transient
@@ -90,7 +94,7 @@ public class Customer {
 			@NotNull(message = "mail is required") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "mail has an invalid format") String mail,
 			@NotNull(message = "address is required") String address,
 			@Min(value = 0, message = "status must be 0 or 1") @Max(value = 1, message = "status must be 0 or 1") Integer status,
-			Region region, String image, @Valid CustomerImage customerImage) {
+			Integer id_region, String image, @Valid CustomerImage customerImage) {
 		super();
 		this.id_customer = id_customer;
 		this.name = name;
@@ -99,10 +103,12 @@ public class Customer {
 		this.mail = mail;
 		this.address = address;
 		this.status = status;
-		this.region = region;
+		this.id_region = id_region;
 		this.image = image;
 		this.customerImage = customerImage;
 	}
+
+
 
 	public Integer getId_customer() {
 		return id_customer;
@@ -160,13 +166,13 @@ public class Customer {
 		this.status = status;
 	}
 
-	public Region getRegion() {
-		return region;
-	}
-
-	public void setRegion(Region region) {
-		this.region = region;
-	}
+//	public Region getRegion() {
+//		return region;
+//	}
+//
+//	public void setRegion(Region region) {
+//		this.region = region;
+//	}
 
 	public String getImage() {
 		return image;
@@ -184,10 +190,18 @@ public class Customer {
 		this.customerImage = customerImage;
 	}
 
+	public Integer getId_region() {
+		return id_region;
+	}
+
+	public void setId_region(Integer id_region) {
+		this.id_region = id_region;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [id_customer=" + id_customer + ", name=" + name + ", surname=" + surname + ", rfc=" + rfc
-				+ ", mail=" + mail + ", address=" + address + ", status=" + status + ", region=" + region + ", image="
-				+ image + ", customerImage=" + customerImage + "]";
+				+ ", mail=" + mail + ", address=" + address + ", status=" + status + ", id_region=" + id_region
+				+ ", image=" + image + ", customerImage=" + customerImage + "]";
 	}
 }

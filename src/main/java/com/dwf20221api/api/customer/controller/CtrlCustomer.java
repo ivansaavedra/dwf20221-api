@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dwf20221api.api.customer.dto.ApiResponse;
+import com.dwf20221api.api.customer.dto.DtoCustomerList;
 import com.dwf20221api.api.customer.entity.Customer;
 import com.dwf20221api.api.customer.entity.CustomerImage;
 import com.dwf20221api.api.customer.entity.Region;
@@ -32,7 +33,7 @@ public class CtrlCustomer {
 	SvcCustomer svcCustomer;
 	
 	@GetMapping
-	public ResponseEntity<List<Customer>> getCustomers(){
+	public ResponseEntity<List<DtoCustomerList>> getCustomers(){
 		return new ResponseEntity<>(svcCustomer.getCustomers(), HttpStatus.OK);
 	}
 	
