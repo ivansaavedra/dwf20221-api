@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dwf20221api.api.customer.dto.ApiResponse;
+import com.dwf20221api.api.product.dto.DtoProductCategory;
 import com.dwf20221api.api.product.dto.DtoProductList;
 import com.dwf20221api.api.product.entity.Category;
 import com.dwf20221api.api.product.entity.Product;
-import com.dwf20221api.api.product.entity.ProductImage;
 import com.dwf20221api.api.product.service.SvcProduct;
 import com.dwf20221api.exceptionHandling.ApiException;
 
@@ -66,5 +66,15 @@ public class CtrlProduct {
 	@DeleteMapping("/{id_product}")
 	public ResponseEntity<ApiResponse> deleteProduct(@PathVariable("id_product") Integer id_product){
 		return new ResponseEntity<>(svcProduct.deleteProduct(id_product), HttpStatus.OK);
+	}
+	
+	@GetMapping("/random")
+	public ResponseEntity<List<DtoProductCategory>> getProductsRandom(){
+		return new ResponseEntity<>(svcProduct.getProductsRandom(), HttpStatus.OK);
+	}
+	
+	@GetMapping("category/{id_category}")
+	public ResponseEntity<List<DtoProductCategory>> getProductsCategory(@PathVariable("id_category") Integer id_category){
+		return new ResponseEntity<>(svcProduct.getProductsCategory(id_category), HttpStatus.OK);
 	}
 }

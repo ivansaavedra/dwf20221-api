@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.dwf20221api.api.customer.dto.ApiResponse;
+import com.dwf20221api.api.product.dto.DtoProductCategory;
 import com.dwf20221api.api.product.dto.DtoProductList;
 import com.dwf20221api.api.product.entity.Product;
 import com.dwf20221api.api.product.repository.RepoProduct;
+import com.dwf20221api.api.product.repository.RepoProductCategory;
 import com.dwf20221api.api.product.repository.RepoProductList;
 import com.dwf20221api.exceptionHandling.ApiException;
 
@@ -25,6 +27,9 @@ public class SvcProductImp implements SvcProduct {
 
 	@Autowired
 	SvcCategory svcCategory;
+	
+	@Autowired
+	RepoProductCategory repoProductCategory;
 
 	@Override
 	public List<DtoProductList> getProducts() {
@@ -95,6 +100,24 @@ public class SvcProductImp implements SvcProduct {
 				return new ApiResponse("product removed");
 			else
 				throw new ApiException(HttpStatus.NOT_FOUND, "product not found");
+		} catch (Exception e) {
+			throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public List<DtoProductCategory> getProductsRandom() {
+		try {
+			return repoProductCategory.findByRandom();
+		} catch (Exception e) {
+			throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public List<DtoProductCategory> getProductsCategory(Integer id_category) {
+		try {
+			return repoProductCategory.findByCategory(id_category);
 		} catch (Exception e) {
 			throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
 		}
