@@ -11,9 +11,4 @@ CREATE TABLE cart(
     FOREIGN KEY (id_product) REFERENCES product(id_product)
 );
 
-INSERT INTO cart VALUES(1,3,1,10,1);
-INSERT INTO cart VALUES(2,3,4,1,1);
-
-INSERT INTO cart VALUES(3,1,4,1,1);
-
 SELECT * FROM cart;
