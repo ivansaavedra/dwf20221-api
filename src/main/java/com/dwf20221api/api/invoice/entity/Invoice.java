@@ -1,4 +1,4 @@
-package com.dwf20221api.api.product.entity;
+package com.dwf20221api.api.invoice.entity;
 
 import java.time.LocalDate;
 

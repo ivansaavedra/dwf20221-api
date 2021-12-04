@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.dwf20221api.api.product.entity.Invoice;
+import com.dwf20221api.api.invoice.entity.Invoice;
 
 @Repository
 public interface RepoInvoice extends JpaRepository<Invoice, Integer>{

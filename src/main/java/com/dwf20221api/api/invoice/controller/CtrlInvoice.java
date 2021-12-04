@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dwf20221api.api.customer.dto.ApiResponse;
+import com.dwf20221api.api.invoice.entity.Invoice;
 import com.dwf20221api.api.invoice.entity.Item;
 import com.dwf20221api.api.invoice.service.SvcInvoice;
-import com.dwf20221api.api.product.entity.Invoice;
 
 @RestController
 @RequestMapping("/invoice")

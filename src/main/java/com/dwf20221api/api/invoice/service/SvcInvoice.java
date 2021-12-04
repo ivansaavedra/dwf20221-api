@@ -3,8 +3,8 @@ package com.dwf20221api.api.invoice.service;
 import java.util.List;
 
 import com.dwf20221api.api.customer.dto.ApiResponse;
+import com.dwf20221api.api.invoice.entity.Invoice;
 import com.dwf20221api.api.invoice.entity.Item;
-import com.dwf20221api.api.product.entity.Invoice;
 
 public interface SvcInvoice {
 
