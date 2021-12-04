@@ -15,8 +15,8 @@ import com.dwf20221api.api.invoice.entity.Cart;
 @Repository
 public interface RepoCart extends JpaRepository<Cart, Integer>{
 
-	@Query(value ="SELECT * FROM cart WHERE id_customer = :id_customer AND status = 1", nativeQuery = true)
-	List<Cart> findByCustomer(@Param("id_customer") Integer id_customer);
+	@Query(value ="SELECT * FROM cart WHERE rfc = :rfc AND status = 1", nativeQuery = true)
+	List<Cart> findByRfc(@Param("rfc") String rfc);
 	
 	@Query(value ="SELECT * FROM cart WHERE id_product = :id_product AND status = 1", nativeQuery = true)
 	Cart findByProduct(@Param("id_product") Integer id_product);
@@ -33,6 +33,6 @@ public interface RepoCart extends JpaRepository<Cart, Integer>{
 	
 	@Modifying
 	@Transactional
-	@Query(value ="UPDATE cart SET status = 0 WHERE id_customer = :id_customer", nativeQuery = true)
-	void deleteCart(@Param("id_customer") Integer id_customer);
+	@Query(value ="UPDATE cart SET status = 0 WHERE rfc = :rfc", nativeQuery = true)
+	void deleteCart(@Param("rfc") String rfc);
 }

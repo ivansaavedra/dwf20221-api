@@ -28,9 +28,9 @@ public class CtrlCart {
 	@Autowired
 	SvcCart svcCart;
 
-	@GetMapping("/{id_customer}")
-	public ResponseEntity<List<Cart>> getCart(@PathVariable("id_customer") int id_customer){
-		return new ResponseEntity<>(svcCart.getCart(id_customer), HttpStatus.OK);
+	@GetMapping("/{rfc}")
+	public ResponseEntity<List<Cart>> getCart(@PathVariable("rfc") String rfc){
+		return new ResponseEntity<>(svcCart.getCart(rfc), HttpStatus.OK);
 	}
 	
 	@PostMapping
@@ -45,8 +45,8 @@ public class CtrlCart {
 		return new ResponseEntity<>(svcCart.removeFromCart(id_cart), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("clear/{id_customer}")
-	public ResponseEntity<ApiResponse> deleteCart(@PathVariable("id_customer") Integer id_customer){
-		return new ResponseEntity<>(svcCart.deleteCart(id_customer), HttpStatus.OK);
+	@DeleteMapping("clear/{rfc}")
+	public ResponseEntity<ApiResponse> deleteCart(@PathVariable("rfc") String rfc){
+		return new ResponseEntity<>(svcCart.deleteCart(rfc), HttpStatus.OK);
 	}
 }

@@ -22,9 +22,9 @@ public class SvcCartImp implements SvcCart {
 	RepoProduct repoProduct;
 
 	@Override
-	public List<Cart> getCart(Integer id_customer) {
+	public List<Cart> getCart(String rfc) {
 		try {
-			return repo.findByCustomer(id_customer);
+			return repo.findByRfc(rfc);
 		}catch(Exception e) {
 			throw new ApiException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
 		}
@@ -68,9 +68,9 @@ public class SvcCartImp implements SvcCart {
 	}
 
 	@Override
-	public ApiResponse deleteCart(Integer id_customer) {
+	public ApiResponse deleteCart(String rfc) {
 		try {
-			repo.deleteCart(id_customer);
+			repo.deleteCart(rfc);
 			return new ApiResponse("cart removed");
 		}catch(Exception e) {
 			throw new ApiException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());

@@ -7,9 +7,9 @@ import com.dwf20221api.api.invoice.entity.Cart;
 
 public interface SvcCart {
 
-	public List<Cart> getCart(Integer id_customer);
+	public List<Cart> getCart(String rfc);
 	public ApiResponse addToCart(Cart cart);
 	public ApiResponse removeFromCart(Integer id_cart);
-	public ApiResponse deleteCart(Integer id_customer);
+	public ApiResponse deleteCart(String rfc);
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.dwf20221api.api.invoice.dto.ProductCart;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,12 +28,13 @@ public class Cart {
 	@Column(name = "id_cart")
 	private Integer id_cart;
 	
-	@JsonProperty("id_customer")
-	@Column(name = "id_customer")
-	@NotNull(message="id_customer is required")
-	private Integer id_customer;
+	@JsonProperty("rfc")
+	@Column(name = "rfc")
+	@NotNull(message="rfc is required")
+	@Pattern(regexp="^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\\d]{3}))?$", message="rfc has an invalid format")
+	private String rfc;
 	
-	@JsonProperty("id_product")
+	@JsonProperty("gtin")
 	@Column(name = "id_product")
 	@NotNull(message="id_product is required")
 	private Integer id_product;
@@ -56,11 +58,11 @@ public class Cart {
 		
 	}
 
-	public Cart(Integer id_cart, Integer id_customer, Integer id_product, Integer quantity, ProductCart product,
+	public Cart(Integer id_cart, String rfc, Integer id_product, Integer quantity, ProductCart product,
 			@Min(value = 0, message = "status must be 0 or 1") @Max(value = 1, message = "status must be 0 or 1") Integer status) {
 		super();
 		this.id_cart = id_cart;
-		this.id_customer = id_customer;
+		this.rfc = rfc;
 		this.id_product = id_product;
 		this.quantity = quantity;
 		this.product = product;
@@ -99,12 +101,12 @@ public class Cart {
 		this.product = product;
 	}
 
-	public Integer getId_customer() {
-		return id_customer;
+	public String getRfc() {
+		return rfc;
 	}
 
-	public void setId_customer(Integer id_customer) {
-		this.id_customer = id_customer;
+	public void setRfc(String rfc) {
+		this.rfc = rfc;
 	}
 
 	public Integer getStatus() {
@@ -117,7 +119,7 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [id_cart=" + id_cart + ", id_customer=" + id_customer + ", id_product=" + id_product
+		return "Cart [id_cart=" + id_cart + ", rfc=" + rfc + ", id_product=" + id_product
 				+ ", quantity=" + quantity + ", product=" + product + ", status=" + status + "]";
 	}
 }
