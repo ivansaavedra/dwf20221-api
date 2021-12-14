@@ -34,7 +34,7 @@ public class Cart {
 	@Pattern(regexp="^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\\d]{3}))?$", message="rfc has an invalid format")
 	private String rfc;
 	
-	@JsonProperty("gtin")
+	@JsonProperty("id_product")
 	@Column(name = "id_product")
 	@NotNull(message="id_product is required")
 	private Integer id_product;
