@@ -3,12 +3,17 @@ package com.dwf20221api.api.product.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.sql.Timestamp;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +25,13 @@ import com.dwf20221api.exceptionHandling.ApiException;
 @Service
 public class SvcProductImageImp implements SvcProductImage {
 	
+	private static final Logger logger = LoggerFactory.getLogger(SvcProductImageImp.class);
+	
 	@Autowired
 	RepoProductImage repo;
+	
+	@Value("${producto.img.path}")
+	private String PRODUCT_IMG_PATH;
 
 	@Override
 	public List<ProductImage> getProductImages(Integer id_product) {
@@ -37,14 +47,19 @@ public class SvcProductImageImp implements SvcProductImage {
 	public ApiResponse createProductImage(ProductImage productImage) {
 		try {
 			if(repo.countImages(productImage.getId_product()) >= 4) {
+				logger.error("You have exceeded the limit of images");
 				throw new ApiException(HttpStatus.BAD_REQUEST, "you have exceeded the limit of images");
 			}
 			
 			long timeMilli = new Date().getTime();
-			String src = "C:/Users/ivan-/Documents/UNAM/FCiencias/Docencia/2022-1/Seminario A  - Frontend/GUI/dwfmarket/src/assets/product_images/"; //CAMBIAR
+			if(PRODUCT_IMG_PATH.contentEquals("D:/DefaultAPIClientPath/assets/product_images/") || !isValidPath(PRODUCT_IMG_PATH)) {
+				logger.error(PRODUCT_IMG_PATH + " Path de carga de imagenes no definido o definido incorrectamente");
+				throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Path de carga de imagenes no definido o definido incorrectamente");
+			}
+			
 			String file = productImage.getId_product() + "/img_" + timeMilli + ".bmp";
 			
-			File directorio = new File(src + "/" + productImage.getId_product());
+			File directorio = new File(PRODUCT_IMG_PATH + "/" + productImage.getId_product());
 	        if (!directorio.exists()) {
 	            if (directorio.mkdirs()) {
 	                System.out.println("Directorio creado");
@@ -54,7 +69,7 @@ public class SvcProductImageImp implements SvcProductImage {
 	        }
 
 			byte[] data = Base64.getMimeDecoder().decode(productImage.getImage().substring(productImage.getImage().indexOf(",")+1, productImage.getImage().length()));
-			try (OutputStream stream = new FileOutputStream(src + file)) {
+			try (OutputStream stream = new FileOutputStream(PRODUCT_IMG_PATH + file)) {
 			    stream.write(data);
 			}
 			
@@ -75,6 +90,20 @@ public class SvcProductImageImp implements SvcProductImage {
 		} catch (Exception e) {
 			throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
 		}
+	}
+	
+	public static boolean isValidPath(String pathStr) {
+	    try {
+	        Path path = Paths.get(pathStr);
+	        File file = new File(path.getParent().toString());
+	        if (file.isDirectory() && file.exists() && file.canWrite() && file.canRead() ) {
+	        	return true;
+	        }
+	        return false;
+	    } catch (InvalidPathException | NullPointerException ex) {
+	        return false;
+	    }
+	    
 	}
 
 }
