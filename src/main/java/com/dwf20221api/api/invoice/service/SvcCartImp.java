@@ -34,7 +34,7 @@ public class SvcCartImp implements SvcCart {
 	public ApiResponse addToCart(Cart cart) {
 		try {
 			Integer product_stock = repoProduct.getStock(cart.getId_product());
-			Cart c = repo.findByProduct(cart.getId_product());
+			Cart c = repo.findByProduct(cart.getId_product(),cart.getRfc());
 			if(c != null) {
 				if(c.getQuantity()+cart.getQuantity() > product_stock) {
 					throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "invalid quantity");
