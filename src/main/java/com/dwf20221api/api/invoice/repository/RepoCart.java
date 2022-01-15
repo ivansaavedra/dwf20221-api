@@ -18,8 +18,8 @@ public interface RepoCart extends JpaRepository<Cart, Integer>{
 	@Query(value ="SELECT * FROM cart WHERE rfc = :rfc AND status = 1", nativeQuery = true)
 	List<Cart> findByRfc(@Param("rfc") String rfc);
 	
-	@Query(value ="SELECT * FROM cart WHERE id_product = :id_product AND rfc=:rfc AND status = 1", nativeQuery = true)
-	Cart findByProduct(@Param("id_product") Integer id_product, @Param("rfc") String rfc);
+	@Query(value ="SELECT * FROM cart WHERE id_product = :id_product AND status = 1", nativeQuery = true)
+	Cart findByProduct(@Param("id_product") Integer id_product);
 	
 	@Modifying
 	@Transactional

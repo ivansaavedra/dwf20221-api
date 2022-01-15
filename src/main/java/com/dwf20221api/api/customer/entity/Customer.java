@@ -32,13 +32,13 @@ public class Customer {
 	@JsonProperty("name")
 	@Column(name = "name")
 	@NotNull(message="name is required")
-	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]*", message="name can only cointain letters")
+	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\\s]*", message="name can only cointain letters")
 	private String name;
 	
 	@JsonProperty("surname")
 	@Column(name = "surname")
 	@NotNull(message="surname is required")
-	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]*", message="surname can only cointain letters")
+	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\\s]*", message="surname can only cointain letters")
 	private String surname;
 	
 	@JsonProperty("rfc")

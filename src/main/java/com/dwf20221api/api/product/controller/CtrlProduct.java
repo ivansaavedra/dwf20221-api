@@ -23,6 +23,7 @@ import com.dwf20221api.api.product.dto.DtoProductList;
 import com.dwf20221api.api.product.entity.Category;
 import com.dwf20221api.api.product.entity.Product;
 import com.dwf20221api.api.product.service.SvcProduct;
+import com.dwf20221api.config.security.annotation.AllowedRoles;
 import com.dwf20221api.exceptionHandling.ApiException;
 
 @RestController
@@ -32,7 +33,12 @@ public class CtrlProduct {
 	@Autowired
 	SvcProduct svcProduct;
 	
+	/*
+	 * La anotacion allowed roles es la que controlara que roles de usuarios pueden solicitar 
+	 * el endpoint y los servicios asociados.
+	 */
 	@GetMapping
+	@AllowedRoles("ADMIN_USER")
 	public ResponseEntity<List<DtoProductList>> getProducts(){
 		return new ResponseEntity<>(svcProduct.getProducts(), HttpStatus.OK);
 	}
