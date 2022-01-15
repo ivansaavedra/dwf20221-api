@@ -79,7 +79,7 @@ public class SvcProductImageImp implements SvcProductImage {
 			return new ApiResponse("image created");
 		} catch (Exception e) {
 			throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
-		}
+		} 
 	}
 
 	@Override
